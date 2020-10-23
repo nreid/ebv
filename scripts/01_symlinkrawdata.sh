@@ -36,5 +36,9 @@ ln -s $RAWDIR2/*fastq.gz $SMALL
 	####### RE-8-TruSeq_DroshaKD_S1_L003_R1_001.fastq.gz
 	####### to correct:  Droska -> Drosha
 
-	####### this error cannot have been made by the sequencer. so somebody did something stupid. 
+	####### this error cannot have been made by the sequencer, right?
+
+# This line edits the mislabeled fastq file symlink (but not the original data)
+mv ../data/small_fastq/RE-8-TruSeq_DroskaKD_S1_L003_R1_001.fastq.gz ../data/small_fastq/RE-8-TruSeq_DroshaKD_S1_L003_R1_001.fastq.gz
+
 
