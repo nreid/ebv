@@ -38,7 +38,6 @@ ln -s $RAWDIR2/*fastq.gz $SMALL
 
 	####### this error cannot have been made by the sequencer, right?
 
-# This line edits the mislabeled fastq file symlink (but not the original data)
-mv ../data/small_fastq/RE-8-TruSeq_DroskaKD_S1_L003_R1_001.fastq.gz ../data/small_fastq/RE-8-TruSeq_DroshaKD_S1_L003_R1_001.fastq.gz
 
+	####### this is dealt with downstream by combining fastq files per the metadata tables. 
 
