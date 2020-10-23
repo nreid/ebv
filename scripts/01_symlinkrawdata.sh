@@ -19,11 +19,11 @@ mkdir -p $DATADIR
 
 # paired end data
 RAWDIR1=/labs/Oneill/jules/paired_end_fastas/
-ln -s $DATADIR/$RAWDIR1
+ln -s $RAWDIR1 $DATADIR
 
 # single end data
 RAWDIR2=/labs/Oneill/jules/single_end_fastas/
-ln -s $DATADIR/$RAWDIR2
+ln -s $RAWDIR2 $DATADIR
 
 ######## NOTE:
 ######## THERE IS A TYPO IN ONE FILE NAME:
