@@ -15,15 +15,19 @@
 # symlink the raw data to this github repo
 
 DATADIR=../data
-mkdir -p $DATADIR
+SMALL=$DATADIR/small_fastq
+TOTAL=$DATADIR/total_fastq
 
-# paired end data
+mkdir -p $SMALL
+mkdir -p $TOTAL
+
+# total rna libraries
 RAWDIR1=/labs/Oneill/jules/paired_end_fastas/
-ln -s $RAWDIR1 $DATADIR
+ln -s $RAWDIR1/*fastq.gz $TOTAL
 
 # single end data
 RAWDIR2=/labs/Oneill/jules/single_end_fastas/
-ln -s $RAWDIR2 $DATADIR
+ln -s $RAWDIR2/*fastq.gz $SMALL
 
 ######## NOTE:
 ######## THERE IS A TYPO IN ONE FILE NAME:
