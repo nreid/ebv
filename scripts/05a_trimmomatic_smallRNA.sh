@@ -18,7 +18,9 @@ date
 module load Trimmomatic/0.39
 
 INDIR=../data/small_combined
+
 OUTDIR=../results/05a_small_trimmed
+mkdir -p $OUTDIR
 
 ADAPT=../meta/TruSeq_SmallRNA.fa
 
@@ -27,7 +29,7 @@ SAMARRAY=($(ls $INDIR | sed 's/.fastq.gz//'))
 SAM=${SAMARRAY[$SLURM_ARRAY_TASK_ID]}
 
 java -jar $Trimmomatic SE \
-        -threads 12 \
+        -threads 4 \
         $INDIR/${SAM}.fastq.gz \
         $OUTDIR/${SAM}.trim.fastq.gz \
         ILLUMINACLIP:${ADAPT}:2:30:10 \
