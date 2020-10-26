@@ -39,3 +39,10 @@ I aggregate `fastqc` reports with `multiqc` using [`04_multiqc.sh`](/scripts/04_
 
 To remove adapter contamination and low quality sequence, I run `Trimmomatic` on both sets of libraries, with adapter fasta files located in [`meta`](/meta) and scripts [`05a_trimmomatic_smallRNA.sh`](/scripts/05a_trimmomatic_smallRNA.sh) and [`05b_trimmomatic_totalRNA.sh`](/scripts/05b_trimmomatic_totalRNA.sh). 
 
+### Step 6: Run `FastQC` again
+
+To assess sequence quality, I run `fastqc` on both sets of libraries with the scripts [`06a_fastqc_small_trimmed.sh`](/scripts/06a_fastqc_small_trimmed.sh) and [`06b_fastqc_total_trimmed.sh`](/scripts/06b_fastqc_total_trimmed.sh). 
+
+### Step 7: Run `MultiQC` again
+
+I aggregate `fastqc` reports with `multiqc` using [`04_multiqc.sh`](/scripts/04_multiqc.sh)
