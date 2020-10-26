@@ -25,10 +25,14 @@ The data are located in this directory on xanadu: `/labs/Oneill/jules`. [`01_sym
 
 To make downstream analysis easier, I combine sequencing lanes within samples. This is accomplished using the script [`02_combine_lanes.sh`](/scripts/02_combine_lanes.sh) and metadata tables in the directory [meta](/meta). Inconsistent file name formatting is fixed here, along with one sample name typo. 
 
-### Step 3: Run fastqc
+### Step 3: Run `FastQC`
 
-To assess sequence quality, I run `fastqc` on both sets of libraries with the scripts [`03a_fastqc_small.sh`](/scripts/03a_fastqc_small.sh) and [`03b_fastqc_total.sh`](/scripts/03b_fastqc_total.sh). I aggregate `fastqc` reports with `multiqc` using [`04_multiqc.sh`](/scripts/04_multiqc.sh)
+To assess sequence quality, I run `fastqc` on both sets of libraries with the scripts [`03a_fastqc_small.sh`](/scripts/03a_fastqc_small.sh) and [`03b_fastqc_total.sh`](/scripts/03b_fastqc_total.sh). 
 
-### Step 4: Run trimmomatic
+### Step 4: Run `MultiQC`
+
+I aggregate `fastqc` reports with `multiqc` using [`04_multiqc.sh`](/scripts/04_multiqc.sh)
+
+### Step 5: Run `Trimmomatic`
 
 To remove adapter contamination and low quality sequence, I run `Trimmomatic` on both sets of libraries, with adapter fasta files located in [`meta`](/meta) and scripts [`05a_trimmomatic_smallRNA.sh`](/scripts/05a_trimmomatic_smallRNA.sh) and [`05b_trimmomatic_totalRNA.sh`](/scripts/05b_trimmomatic_totalRNA.sh). 
