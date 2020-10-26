@@ -41,8 +41,9 @@ To remove adapter contamination and low quality sequence, I run `Trimmomatic` on
 
 ### Step 6: Run `FastQC` again
 
-To assess sequence quality, I run `fastqc` on both sets of libraries with the scripts [`06a_fastqc_small_trimmed.sh`](/scripts/06a_fastqc_small_trimmed.sh) and [`06b_fastqc_total_trimmed.sh`](/scripts/06b_fastqc_total_trimmed.sh). 
+To assess trimmed sequence quality, I run `fastqc` on both sets of libraries with the scripts [`06a_fastqc_small_trimmed.sh`](/scripts/06a_fastqc_small_trimmed.sh) and [`06b_fastqc_total_trimmed.sh`](/scripts/06b_fastqc_total_trimmed.sh). 
 
 ### Step 7: Run `MultiQC` again
 
-I aggregate `fastqc` reports with `multiqc` using [`04_multiqc.sh`](/scripts/04_multiqc.sh)
+I aggregate trimmed `fastqc` reports with `multiqc` using [`07_multiqc_trimmed.sh`](/scripts/07_multiqc_trimmed.sh)
+
