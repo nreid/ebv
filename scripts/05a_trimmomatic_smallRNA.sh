@@ -32,7 +32,7 @@ java -jar $Trimmomatic SE \
         -threads 4 \
         $INDIR/${SAM}.fastq.gz \
         $OUTDIR/${SAM}.trim.fastq.gz \
-        ILLUMINACLIP:${ADAPT}:2:30:10 \
+        ILLUMINACLIP:${ADAPT}:2:30:6 \
         SLIDINGWINDOW:4:20 \
         MINLEN:15 \
         CROP:75
