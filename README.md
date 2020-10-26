@@ -15,6 +15,7 @@ adapters for trimming obtained [on illumina's website](https://support.illumina.
 total rna libraries use the TruSeq adapters
 small rna libraries use TruSeq small RNA adapter
 
+To reproduce this analysis on the UConn Xanadu cluster, ensure the raw data is still there, then run each script in sequence. 
 
 ## Analysis steps
 
@@ -37,3 +38,4 @@ I aggregate `fastqc` reports with `multiqc` using [`04_multiqc.sh`](/scripts/04_
 ### Step 5: Run `Trimmomatic`
 
 To remove adapter contamination and low quality sequence, I run `Trimmomatic` on both sets of libraries, with adapter fasta files located in [`meta`](/meta) and scripts [`05a_trimmomatic_smallRNA.sh`](/scripts/05a_trimmomatic_smallRNA.sh) and [`05b_trimmomatic_totalRNA.sh`](/scripts/05b_trimmomatic_totalRNA.sh). 
+

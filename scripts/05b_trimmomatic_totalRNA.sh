@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=trimmo_small
+#SBATCH --job-name=trimmo_total
 #SBATCH -o %x_%A_%a.out
 #SBATCH -e %x_%A_%a.err
 #SBATCH --mail-type=ALL
