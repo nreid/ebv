@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=multiqc_trimmed
+#SBATCH --job-name=multiqc
 #SBATCH -n 1
 #SBATCH -N 1
 #SBATCH -c 1
