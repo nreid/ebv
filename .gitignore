@@ -5,8 +5,6 @@
 **/trimmed_multiqc
 *.Rproj
 *.out
-*.fa
-*.fna
 *.gff
 *.gtf
 *.bam
