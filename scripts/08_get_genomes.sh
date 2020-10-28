@@ -98,6 +98,7 @@ gunzip GCF_002402265.1_ASM240226v1_genomic.gtf.gz
 
 # RNAs, including small RNAs and large polycistrons
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/002/402/265/GCF_002402265.1_ASM240226v1/GCF_002402265.1_ASM240226v1_rna_from_genomic.fna.gz
+gunzip GCF_002402265.1_ASM240226v1_rna_from_genomic.fna.gz
 
 ############################
 # Get ENSEMBL transcripts
@@ -160,6 +161,7 @@ cd ..
 cat \
 $ENSEMBL/Homo_sapiens.GRCh38.cdna.all.fa \
 $ENSEMBL/Homo_sapiens.GRCh38.ncrna.fa \
+$NCBIEBV/GCF_002402265.1_ASM240226v1_rna_from_genomic.fna \
 $SPIKE/ercc_spike_ins.fa \
 >total_transcripts.fa
 
@@ -169,5 +171,6 @@ $SPIKE/ercc_spike_ins.fa \
 cat \
 $ENSEMBL/Homo_sapiens.GRCh38.cdna.all.fa \
 $ENSEMBL/Homo_sapiens.GRCh38.ncrna.fa \
+$NCBIEBV/GCF_002402265.1_ASM240226v1_rna_from_genomic.fna \
 $SPIKE/ExiSEQ-NGS-QC-Spike-ins.fa \
 >small_transcripts.fa
