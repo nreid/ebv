@@ -55,7 +55,7 @@ I use the script [`08_get_genomes.sh`](/scripts/08_get_genomes.sh).
 
 In short, I pull a bunch of files from NCBI, ENSEMBL, and the manufacturer of the spike-ins (with the exception of the ExiSEQ sequences, which I couldn't find, so I'm using the file from `/labs/Oneill/jules`). 
 
-I generate modified reference transcriptomes by appending the ENSEMBL transcripts for coding genes and ncRNA with either the small RNA spike-ins for the small RNA analysis (`small_transcripts.fa`) or the ERCC spike-ins for the total RNA analysis (`total_transcripts.fa`). 
+I generate modified reference transcriptomes by appending the ENSEMBL transcripts for coding genes and ncRNA with the NCBI EBV transcripts and either the small RNA spike-ins for the small RNA analysis (`small_transcripts.fa`) or the ERCC spike-ins for the total RNA analysis (`total_transcripts.fa`). 
 
 This script will be updated to create a modified reference genome/annotation pair as well to do genome-based quantification. 
 
