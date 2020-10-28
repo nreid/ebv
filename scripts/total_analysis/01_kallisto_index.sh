@@ -15,7 +15,7 @@ hostname
 date
 
 ##########################################
-## Creating an Index			##	
+## create index file					##	
 ##########################################
 
 INDIR=../../genome/

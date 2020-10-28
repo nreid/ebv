@@ -16,7 +16,7 @@ hostname
 date
 
 ##########################################
-## kallisto quantification algorithm	##	
+## quantify expression with kallisto	##	
 ##########################################
 
 module load kallisto/0.44.0
