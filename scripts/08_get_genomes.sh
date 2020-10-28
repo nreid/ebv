@@ -76,13 +76,13 @@ gunzip GCA_000001405.15_GRCh38_full_analysis_set.refseq_annotation.gff.gz
 # get samtools index
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.28_GRCh38.p13/GRCh38_major_release_seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai
 
-# get hisat2 index
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.28_GRCh38.p13/GRCh38_major_release_seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.hisat2_index.tar.gz
-tar -xvf GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.hisat2_index.tar.gz
+# # get hisat2 index
+# wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.28_GRCh38.p13/GRCh38_major_release_seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.hisat2_index.tar.gz
+# tar -xvf GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.hisat2_index.tar.gz
 
-# get bwa index
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.28_GRCh38.p13/GRCh38_major_release_seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bwa_index.tar.gz
-tar -xvf GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bwa_index.tar.gz
+# # get bwa index
+# wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.28_GRCh38.p13/GRCh38_major_release_seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bwa_index.tar.gz
+# tar -xvf GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bwa_index.tar.gz
 
 ############################
 # Get EBV genes and annotation
