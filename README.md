@@ -51,5 +51,17 @@ I aggregate trimmed `fastqc` reports with `multiqc` using [`07_multiqc_trimmed.s
 
 We need to aggregate and modify reference files to map against. The total RNA libraries have ERCC spike-ins added. The small RNA libraries have ExiSeq small RNA spike-ins added. All samples (except controls) are either infected by, or transfected with, Epstein-Barr virus in full or in part. 
 
+I use the script [`08_get_genomes.sh`](/scripts/08_get_genomes.sh). 
+
+In short, I pull a bunch of files from NCBI, ENSEMBL, and the manufacturer of the spike-ins (with the exception of the ExiSEQ sequences, which I couldn't find, so I'm using the file from `/labs/Oneill/jules`). 
+
+I generate modified reference transcriptomes by appending the ENSEMBL transcripts for coding genes and ncRNA with either the small RNA spike-ins for the small RNA analysis (`small_transcripts.fa`) or the ERCC spike-ins for the total RNA analysis (`total_transcripts.fa`). 
+
+This script will be updated to create a modified reference genome/annotation pair as well to do genome-based quantification. 
+
+______________
 
 
+The analysis pathways now diverge sufficiently that they will be documented separately. 
+
+## Total RNA libraries
