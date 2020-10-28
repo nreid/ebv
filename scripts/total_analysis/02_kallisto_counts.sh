@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 #SBATCH --job-name=counts
 #SBATCH -n 1
 #SBATCH -N 1
