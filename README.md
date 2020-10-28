@@ -66,7 +66,7 @@ The analysis pathways now diverge sufficiently that they will be documented sepa
 
 ## Total RNA libraries
 
-First I will quantify gene expression on the synthetic reference transcriptome created above, `total_transcripts.fa` using `kallisto` and analyzing the resulting count data in `DESeq2`. 
+First I will quantify gene expression on the synthetic reference transcriptome created above (`total_transcripts.fa`) using `kallisto` and analyzing the resulting count data in `DESeq2`. 
 
 ### Step 1: Index the reference file
 
@@ -77,3 +77,5 @@ See script [`01_kallisto_index.sh`](/scripts/total_analysis/01_kallisto_index.sh
 See script [`02_kallisto_counts.sh`](scripts/total_analysis/02_kallisto_counts.sh)
 
 ### Step 3: Statistical analysis in R
+
+See script [`analysis.R`](scripts/total_analysis/analysis.R)
