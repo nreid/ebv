@@ -47,3 +47,9 @@ To assess trimmed sequence quality, I run `fastqc` on both sets of libraries wit
 
 I aggregate trimmed `fastqc` reports with `multiqc` using [`07_multiqc_trimmed.sh`](/scripts/07_multiqc_trimmed.sh)
 
+### Step 8: Get and format genomes and annotations
+
+We need to aggregate and modify reference files to map against. The total RNA libraries have ERCC spike-ins added. The small RNA libraries have ExiSeq small RNA spike-ins added. All samples (except controls) are either infected by, or transfected with, Epstein-Barr virus in full or in part. 
+
+
+

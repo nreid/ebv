@@ -28,6 +28,7 @@ SAMARRAY=($(ls $INDIR | sed 's/.fastq.gz//'))
 
 SAM=${SAMARRAY[$SLURM_ARRAY_TASK_ID]}
 
+# lowered simple clip threshold to 6 to try to weed out more adapter contamination
 java -jar $Trimmomatic SE \
         -threads 4 \
         $INDIR/${SAM}.fastq.gz \
