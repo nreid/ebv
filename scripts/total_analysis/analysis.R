@@ -306,7 +306,7 @@ rld <- rlog(dds, blind=FALSE)
 
 # first for RERP (RPE vs RE)
 # get top 50 log fold change genes (excluding cook's cutoff outliers)
-top50 <- data.frame(RERP) %>%
+top50 <- data.frame(RERPs) %>%
   filter(!is.na(padj)) %>% 
   arrange(-abs(log2FoldChange)) %>% 
   rownames() %>% 
@@ -317,7 +317,7 @@ df <- data.frame(colData(dds)[,"CellLine"])
   colnames(df) <- "CellLine"
 
 pheatmap(
-  assay(rld)[top50,], 
+  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
   cluster_rows=TRUE, 
   show_rownames=TRUE,
   cluster_cols=FALSE,
@@ -327,7 +327,7 @@ pheatmap(
 # to save the plot
 png(filename=paste0(figdir,"heatmap_REvsRPE.png"), width=800,height=800)
 pheatmap(
-  assay(rld)[top50,], 
+  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
   cluster_rows=TRUE, 
   show_rownames=TRUE,
   cluster_cols=FALSE,
@@ -335,5 +335,35 @@ pheatmap(
   )
 dev.off()
 
-plotCounts(dds, gene="ENST00000070846.10", intgroup="CellLine")
+# now for sh vs RPE
+# get top 50 log fold change genes (excluding cook's cutoff outliers)
+top50 <- data.frame(shRPs) %>%
+  filter(!is.na(padj)) %>% 
+  arrange(-abs(log2FoldChange)) %>% 
+  rownames() %>% 
+  head(.,n=50)
+
+df <- data.frame(colData(dds)[,"CellLine"])
+  rownames(df) <- colnames(dds)
+  colnames(df) <- "CellLine"
+
+
+pheatmap(
+  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
+  cluster_rows=TRUE, 
+  show_rownames=TRUE,
+  cluster_cols=FALSE,
+  annotation_col=df
+  )
+
+# to save the plot
+png(filename=paste0(figdir,"heatmap_shvsRPE.png"), width=800,height=800)
+pheatmap(
+  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
+  cluster_rows=TRUE, 
+  show_rownames=TRUE,
+  cluster_cols=FALSE,
+  annotation_col=df
+  )
+dev.off()
 
