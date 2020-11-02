@@ -177,13 +177,6 @@ dir.create(figdir)
 # normalized, variance-stabilized transformed counts for visualization
 vsd <- vst(dds, blind=FALSE)
 
-plotPCA(vsd, intgroup="CellLine")
-
-plotPCA(vsd, intgroup="CellLine")
-
-
-# alternatively, using ggplot
-
 dat <- plotPCA(vsd, intgroup="CellLine",returnData=TRUE)
 percentVar <- round(100 * attr(dat, "percentVar"))
 
@@ -197,32 +190,39 @@ p
 # to save the plot
 ggsave(filename="1_PCAv1.png",plot=p,device="png",path=figdir)
 
-# MA plot
-plotMA(res_shrink, ylim=c(-4,4))
 
-# distribution of log2 fold changes:
-  # there should be a peak at 0
-hist(resDE$log2FoldChange,breaks=200)
-abline(v=0,col="red",lwd=2)
+######################################################
+# RE-Run the statistical analysis
+######################################################
 
-##############
+# exclude sample miA_1_S5 as an outlier.
+	# it is in index position 1
 
-#Volcano plot
+dds <- DESeq(ddsKAL[,-1])
 
-# negative log-scaled adjusted p-values
-log_padj <- -log(res_shrink$padj,10)
-log_padj[log_padj > 100] <- 100
 
-# plot
-plot(x=res_shrink$log2FoldChange,
-     y=log_padj,
-     pch=20,
-     cex=.2,
-     col=(log_padj > 3)+1, # color padj < 0.1 red
-     ylab="negative log-scaled adjusted p-value",
-     xlab="shrunken log2 fold changes")
+######################################################
+# Back to data visualization
+######################################################
 
-#############
+# PCA plot
+
+# normalized, variance-stabilized transformed counts for visualization
+vsd <- vst(dds, blind=FALSE)
+
+dat <- plotPCA(vsd, intgroup="CellLine",returnData=TRUE)
+percentVar <- round(100 * attr(dat, "percentVar"))
+
+p <- ggplot(dat,aes(x=PC1,y=PC2,col=group)) +
+	geom_point() + 
+	xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+	ylab(paste0("PC2: ",percentVar[2],"% variance")) +
+	geom_text_repel(aes(label=name))
+p
+
+# to save the plot
+ggsave(filename="2_PCAv2.png",plot=p,device="png",path=figdir)
+
 
 ######################################################
 # Get a table of results
@@ -251,7 +251,37 @@ resultsNames(dds)
 # res_shrink <- lfcShrink(dds, coef="CellLine_sh_vs_RP", type="ashr")
 res_shrink <- lfcShrink(dds, contrast=c("CellLine","RE","mi"),type="ashr")
 	
+######################################################
+# Back to data visualization
+######################################################
 
+
+# MA plot
+plotMA(res_shrink, ylim=c(-4,4))
+
+# distribution of log2 fold changes:
+  # there should be a peak at 0
+hist(resDE$log2FoldChange,breaks=200)
+abline(v=0,col="red",lwd=2)
+
+##############
+
+#Volcano plot
+
+# negative log-scaled adjusted p-values
+log_padj <- -log(res_shrink$padj,10)
+log_padj[log_padj > 100] <- 100
+
+# plot
+plot(x=res_shrink$log2FoldChange,
+     y=log_padj,
+     pch=20,
+     cex=.2,
+     col=(log_padj > 3)+1, # color padj < 0.1 red
+     ylab="negative log-scaled adjusted p-value",
+     xlab="shrunken log2 fold changes")
+
+#############
 
 
 
