@@ -232,12 +232,17 @@ ggsave(filename="2_PCAv2.png",plot=p,device="png",path=figdir)
 
 resultsNames(dds)
 
-# get results table
-# resDE <- results(dds, name="CellLine_sh_vs_RP")
-resDE <- results(dds, contrast=c("CellLine","RE","mi"))
+# get results tables for all 6 pairwise contrasts
+
+miRP <- results(dds, name="CellLine_mi_vs_RP")
+shRP <- results(dds, name="CellLine_sh_vs_RP")
+RERP <- results(dds, name="CellLine_RE_vs_RP")
+REmi <- results(dds, contrast=c("CellLine","RE","mi"))
+shmi <- results(dds, contrast=c("CellLine","sh","mi"))
+REsh <- results(dds, contrast=c("CellLine","sh","RE"))
 
 # get a quick summary of the table
-summary(resDE)
+summary(shRP)
 
 
 ######################################################
@@ -247,21 +252,28 @@ summary(resDE)
 # see coefficient names:
 resultsNames(dds)
 
-# get shrunken log fold changes, specifying the coefficient 
-# res_shrink <- lfcShrink(dds, coef="CellLine_sh_vs_RP", type="ashr")
-res_shrink <- lfcShrink(dds, contrast=c("CellLine","RE","mi"),type="ashr")
+# get shrunken log fold changes, specifying the coefficient or contrast
+
+miRPs <- lfcShrink(dds, coef="CellLine_mi_vs_RP",type="ashr")
+shRPs <- lfcShrink(dds, coef="CellLine_sh_vs_RP",type="ashr")
+RERPs <- lfcShrink(dds, coef="CellLine_RE_vs_RP",type="ashr")
+REmis <- lfcShrink(dds, contrast=c("CellLine","RE","mi"),type="ashr")
+shmis <- lfcShrink(dds, contrast=c("CellLine","sh","mi"),type="ashr")
+REshs <- lfcShrink(dds, contrast=c("CellLine","sh","RE"),type="ashr")
 	
 ######################################################
 # Back to data visualization
 ######################################################
 
-
 # MA plot
-plotMA(res_shrink, ylim=c(-4,4))
+plotMA(RERPs, ylim=c(-4,4))
+
+plotMA(shRPs, ylim=c(-4,4))
 
 # distribution of log2 fold changes:
   # there should be a peak at 0
-hist(resDE$log2FoldChange,breaks=200)
+  # some weird spikes are accounted for by low expression genes filtered by independent filtering
+hist(RERP$log2FoldChange,breaks=2000,xlim=c(-4,4))
 abline(v=0,col="red",lwd=2)
 
 ##############
@@ -292,8 +304,9 @@ plot(x=res_shrink$log2FoldChange,
 # regularized log transformation of counts
 rld <- rlog(dds, blind=FALSE)
 
+# first for RERP (RPE vs RE)
 # get top 50 log fold change genes (excluding cook's cutoff outliers)
-top50 <- data.frame(res_shrink) %>%
+top50 <- data.frame(RERP) %>%
   filter(!is.na(padj)) %>% 
   arrange(-abs(log2FoldChange)) %>% 
   rownames() %>% 
@@ -311,6 +324,16 @@ pheatmap(
   annotation_col=df
   )
 
+# to save the plot
+png(filename=paste0(figdir,"heatmap_REvsRPE.png"), width=800,height=800)
+pheatmap(
+  assay(rld)[top50,], 
+  cluster_rows=TRUE, 
+  show_rownames=TRUE,
+  cluster_cols=FALSE,
+  annotation_col=df
+  )
+dev.off()
 
 plotCounts(dds, gene="ENST00000070846.10", intgroup="CellLine")
 
