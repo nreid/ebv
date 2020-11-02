@@ -13,13 +13,15 @@ library(ggrepel)
 
 list.files()
 
-#Set directory paths to working directory
+# Script assumes kallisto counts are located in this directory
 count_dir <- "../../results/total_analysis/counts/" # or appropriate path to the counts 
 
 
 #################################################
 # Read in count data
 #################################################
+
+
 
 # create a empty dataframe called co to merge the data into
 co <- data.frame()
@@ -116,11 +118,14 @@ table(subg)
 m <- m[subg,]
 mylength <- mylength[subg]
 
+# make an MDS 
+
+
 # downstream analysis shows that miA_1_S5 is a very problematic sample. exclude it.
 	# in the PCA, it is way off by itself on PC1, which explains 43% of the variance of the rld transformed counts
 
-m <- m[,!(colnames(m) %in% "miA_1_S5")]
-myfactors <- myfactors[myfactors[,1]!="miA_1_S5",]
+# m <- m[,!(colnames(m) %in% "miA_1_S5")]
+# myfactors <- myfactors[myfactors[,1]!="miA_1_S5",]
 
 #################################################
 #  Analyze the data using DESeq2
@@ -131,7 +136,7 @@ myfactors <- myfactors[myfactors[,1]!="miA_1_S5",]
   # we are rounding 'm' because DESeq2 expects integer counts,
   # but Kallisto estimates the counts, resulting in fractional numbers
 
-ddsHTSeq <- DESeqDataSetFromMatrix(
+ddsKAL <- DESeqDataSetFromMatrix(
   countData = round(m),
   colData = myfactors,
   design = ~ CellLine
@@ -142,26 +147,55 @@ ddsHTSeq <- DESeqDataSetFromMatrix(
 ######################################################
 
 # To see the levels as they are now:
-ddsHTSeq$CellLine
+ddsKAL$CellLine
 
 # To replace the order with one of your choosing, create a vector with the order you want:
 treatments <- c("RP","mi","sh","RE")
 
 # Then reset the factor levels:
-ddsHTSeq$CellLine <- factor(ddsHTSeq$CellLine, levels = treatments)
+ddsKAL$CellLine <- factor(ddsKAL$CellLine, levels = treatments)
 
 # verify the order
-ddsHTSeq$CellLine
+ddsKAL$CellLine
 
 ######################################################
 # Run the statistical analysis
 ######################################################
 
-dds <- DESeq(ddsHTSeq)
+dds <- DESeq(ddsKAL)
 
 ######################################################
 # Data visualization
 ######################################################
+
+# set a directory to save figures in
+figdir <- "../../doc/figs/"
+dir.create(figdir)
+
+# PCA plot
+
+# normalized, variance-stabilized transformed counts for visualization
+vsd <- vst(dds, blind=FALSE)
+
+plotPCA(vsd, intgroup="CellLine")
+
+plotPCA(vsd, intgroup="CellLine")
+
+
+# alternatively, using ggplot
+
+dat <- plotPCA(vsd, intgroup="CellLine",returnData=TRUE)
+percentVar <- round(100 * attr(dat, "percentVar"))
+
+p <- ggplot(dat,aes(x=PC1,y=PC2,col=group)) +
+	geom_point() + 
+	xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+	ylab(paste0("PC2: ",percentVar[2],"% variance")) +
+	geom_text_repel(aes(label=name))
+p
+
+# to save the plot
+ggsave(filename="1_PCAv1.png",plot=p,device="png",path=figdir)
 
 # MA plot
 plotMA(res_shrink, ylim=c(-4,4))
@@ -189,23 +223,6 @@ plot(x=res_shrink$log2FoldChange,
      xlab="shrunken log2 fold changes")
 
 #############
-
-# PCA plot
-
-# normalized, variance-stabilized transformed counts for visualization
-vsd <- vst(dds, blind=FALSE)
-
-plotPCA(vsd, intgroup="CellLine")
-
-# alternatively, using ggplot
-
-dat <- plotPCA(vsd, intgroup="CellLine",returnData=TRUE)
-
-p <- ggplot(dat,aes(x=PC1,y=PC2,col=group))
-p <- p + geom_point() + geom_text_repel(aes(label=name))
-p
-
-
 
 ######################################################
 # Get a table of results
