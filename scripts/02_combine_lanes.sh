@@ -69,6 +69,8 @@ do
 
 done
 
+# some data files were uncompressed or already concatenated. 
+# these are not in the metadata file and are dealt with separately here 
 # deal with uncompressed files
 cat $SMALL/*Hsa*fastq | gzip >$COMBS/Hsa_CONTROL_S1.fastq.gz
 echo Hsa control done
@@ -76,6 +78,6 @@ echo Hsa control done
 cat $SMALL/*RE-8NoTxt* | gzip >$COMBS/RE_CONTROL_S7.fastq.gz
 echo RE control done
 
-gzip -c $SMALL/SNU_TruSeq13_R1.fastq >SNU_CONTROL_X.fastq.gz
+gzip -c $SMALL/SNU_TruSeq13_R1.fastq >$COMBS/SNU_CONTROL_X.fastq.gz
 echo SNU control done
 
