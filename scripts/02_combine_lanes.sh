@@ -69,6 +69,7 @@ do
 
 done
 
+# deal with uncompressed files
 
 
 

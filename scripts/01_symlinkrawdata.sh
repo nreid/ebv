@@ -29,6 +29,9 @@ ln -s $RAWDIR1/*fastq.gz $TOTAL
 RAWDIR2=/labs/Oneill/jules/single_end_fastas/
 ln -s $RAWDIR2/*fastq.gz $SMALL
 
+# several single end files are uncompressed for some reason. 
+ln -s $RAWDIR2/*fastq $SMALL
+
 ######## NOTE:
 ######## THERE IS A TYPO IN ONE FILE NAME:
 	####### RE-8-TruSeq_DroskaKD_S1_L003_R1_001.fastq.gz 
