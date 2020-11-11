@@ -13,6 +13,3 @@ jid10=$(sbatch --parsable --dependency=afterok:$jid9 07_multiqc_trimmed.sh)
 jid11=$(sbatch --parsable --dependency=afterok:$jid10 08_get_genomes.sh)
 jid12=$(sbatch --parsable --dependency=afterok:$jid11 total_analysis/01_kallisto_index.sh)
 jid13=$(sbatch --parsable --dependency=afterok:$jid12 total_analysis/02_kallisto_counts.sh)
-
-total_analysis/01_kallisto_index.sh
-total_analysis/02_kallisto_counts.sh
