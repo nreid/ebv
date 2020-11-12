@@ -190,6 +190,24 @@ p
 # to save the plot
 ggsave(filename="1_PCAv1.png",plot=p,device="png",path=figdir)
 
+######################################################
+# Check spike-ins
+######################################################
+
+# get spike in concentrations:
+tspikes <- read.table("../../genome/spike_ins/cms_095046.txt", header=TRUE, sep="\t")
+rownames(tspikes) <- tspikes[,2]
+
+ercc_names <- rownames(dds) %>% grep("ERCC",.)
+ercc <- counts(dds,normalized=TRUE)[ercc_names,]
+lercc <- log(ercc,base=10)
+lercc[is.infinite(lercc)] <- NA
+
+erccu <- counts(dds,normalized=FALSE)[ercc_names,]
+
+# arbitrary mix numbers assigned
+mix <- (1/cor(ercc)) %>% as.dist() %>% hclust() %>% cutree(.,2)
+
 
 ######################################################
 # RE-Run the statistical analysis
@@ -197,8 +215,26 @@ ggsave(filename="1_PCAv1.png",plot=p,device="png",path=figdir)
 
 # exclude sample miA_1_S5 as an outlier.
 	# it is in index position 1
+# rachel suggests a few other samples could be excluded:
+	# RPE_3_S11
+	# miC_1_S1
+	# miD_1_S4
+	# shA_5_S2
+	# RE_12_S9
 
-dds <- DESeq(ddsKAL[,-1])
+
+remove <- c(1,2,5,9,10)
+
+ddsKAL <- DESeqDataSetFromMatrix(
+  countData = round(m[,-remove]),
+  colData = myfactors[-remove,],
+  design = ~ CellLine
+  )
+
+treatments <- c("RP","mi","sh","RE")
+ddsKAL$CellLine <- factor(ddsKAL$CellLine, levels = treatments)
+
+dds <- DESeq(ddsKAL)
 
 
 ######################################################
@@ -234,15 +270,15 @@ resultsNames(dds)
 
 # get results tables for all 6 pairwise contrasts
 
-miRP <- results(dds, name="CellLine_mi_vs_RP")
+# miRP <- results(dds, name="CellLine_mi_vs_RP")
 shRP <- results(dds, name="CellLine_sh_vs_RP")
 RERP <- results(dds, name="CellLine_RE_vs_RP")
-REmi <- results(dds, contrast=c("CellLine","RE","mi"))
-shmi <- results(dds, contrast=c("CellLine","sh","mi"))
+# REmi <- results(dds, contrast=c("CellLine","RE","mi"))
+# shmi <- results(dds, contrast=c("CellLine","sh","mi"))
 REsh <- results(dds, contrast=c("CellLine","sh","RE"))
 
 # get a quick summary of the table
-summary(shRP)
+summary(REsh)
 
 
 ######################################################
@@ -254,11 +290,11 @@ resultsNames(dds)
 
 # get shrunken log fold changes, specifying the coefficient or contrast
 
-miRPs <- lfcShrink(dds, coef="CellLine_mi_vs_RP",type="ashr")
+# miRPs <- lfcShrink(dds, coef="CellLine_mi_vs_RP",type="ashr")
 shRPs <- lfcShrink(dds, coef="CellLine_sh_vs_RP",type="ashr")
 RERPs <- lfcShrink(dds, coef="CellLine_RE_vs_RP",type="ashr")
-REmis <- lfcShrink(dds, contrast=c("CellLine","RE","mi"),type="ashr")
-shmis <- lfcShrink(dds, contrast=c("CellLine","sh","mi"),type="ashr")
+# REmis <- lfcShrink(dds, contrast=c("CellLine","RE","mi"),type="ashr")
+# shmis <- lfcShrink(dds, contrast=c("CellLine","sh","mi"),type="ashr")
 REshs <- lfcShrink(dds, contrast=c("CellLine","sh","RE"),type="ashr")
 	
 ######################################################
@@ -269,6 +305,9 @@ REshs <- lfcShrink(dds, contrast=c("CellLine","sh","RE"),type="ashr")
 plotMA(RERPs, ylim=c(-4,4))
 
 plotMA(shRPs, ylim=c(-4,4))
+
+plotMA(REshs, ylim=c(-4,4))
+
 
 # distribution of log2 fold changes:
   # there should be a peak at 0
@@ -317,7 +356,7 @@ df <- data.frame(colData(dds)[,"CellLine"])
   colnames(df) <- "CellLine"
 
 pheatmap(
-  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
+  assay(rld)[top50,c(1,4,5,2,3,6,7)], 
   cluster_rows=TRUE, 
   show_rownames=TRUE,
   cluster_cols=FALSE,
@@ -327,7 +366,7 @@ pheatmap(
 # to save the plot
 png(filename=paste0(figdir,"heatmap_REvsRPE.png"), width=800,height=800)
 pheatmap(
-  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
+  assay(rld)[top50,c(1,4,5,2,3,6,7)], 
   cluster_rows=TRUE, 
   show_rownames=TRUE,
   cluster_cols=FALSE,
@@ -349,7 +388,7 @@ df <- data.frame(colData(dds)[,"CellLine"])
 
 
 pheatmap(
-  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
+  assay(rld)[top50,c(1,4,5,2,3,6,7)], 
   cluster_rows=TRUE, 
   show_rownames=TRUE,
   cluster_cols=FALSE,
@@ -359,7 +398,7 @@ pheatmap(
 # to save the plot
 png(filename=paste0(figdir,"heatmap_shvsRPE.png"), width=800,height=800)
 pheatmap(
-  assay(rld)[top50,c(6,7,8,1,2,9,10,11,3,4,5)], 
+  assay(rld)[top50,c(1,4,5,2,3,6,7)], 
   cluster_rows=TRUE, 
   show_rownames=TRUE,
   cluster_cols=FALSE,
