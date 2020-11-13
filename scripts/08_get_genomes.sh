@@ -147,9 +147,36 @@ cd ..
 
 # Add ERCC spike-ins, ExiSEQ spike-ins to GRCh38.p13 (EBV is already there)
 
-# add spike in lines to GTF and GFF3 annotations
+cat ncbi_homo/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
+spike_ins/ercc_spike_ins.fa \
+>total_genome.fa
 
+cat ncbi_homo/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
+spike_ins/ExiSEQ-NGS-QC-Spike-ins.fa \
+>small_genome.fa
 
+# add spike in lines and ebv lines to GTF annotations
+
+#### BIOAWK IS NOT AVAILABLE ON THE CLUSTER. 
+#### I'M TOO LAZY TO INSTALL IT
+#### THIS LINE MUST POINT TO A COPY OF BIOAWK
+bioawk=~/bin/bioawk/bioawk
+
+# TOTAL
+# human genome
+cat ncbi_homo/GCA_000001405.15_GRCh38_full_analysis_set.refseq_annotation.gtf >total_genome.gtf
+# ebv
+awk '{FS="\t"}{OFS="\t"}{print "chrEBV",$2,$3,$4,$5,$6,$7,$8,$9}' ncbi_ebv/GCF_002402265.1_ASM240226v1_genomic.gtf >>total_genome.gtf
+# spike-ins
+$bioawk -c fastx '{l=length($seq)}{print $name,"spike_in","exon",1,l,".","+",".","gene_id " "\""$name"\"""; ""transcript_id " "\""$name"\""}' spike_ins/ercc_spike_ins.fa >>total_genome.gtf
+
+# SMALL
+# human genome
+cat ncbi_homo/GCA_000001405.15_GRCh38_full_analysis_set.refseq_annotation.gtf >small_genome.gtf
+# ebv
+awk '{FS="\t"}{OFS="\t"}{print "chrEBV",$2,$3,$4,$5,$6,$7,$8,$9}' ncbi_ebv/GCF_002402265.1_ASM240226v1_genomic.gtf >>small_genome.gtf
+# spike-ins
+$bioawk -c fastx '{l=length($seq)}{print $name,"spike_in","exon",1,l,".","+",".","gene_id " "\""$name"\"""; ""transcript_id " "\""$name"\""}' spike_ins/ExiSEQ-NGS-QC-Spike-ins.fa >>small_genome.gtf
 
 
 ############################
