@@ -33,11 +33,17 @@ LIST=($(ls $INDIR/*trim.fastq.gz | sed 's/.*trimmed\///' | sed 's/.trim.*//'))
 # get one sample ID using the slurm array task ID
 SAM=${LIST[$SLURM_ARRAY_TASK_ID]}
 
+MEAN=$(zcat $INDIR/${SAM}.trim.fastq.gz | head -n 10000 | $bioawk -c fastx '{n+=length($seq)}END{print n/NR}')
+
+SD=$(zcat $INDIR/${SAM}.trim.fastq.gz | head -n 10000 | $bioawk -v m=$MEAN -c fastx '{n+=(length($seq)-m)^2}END{print sqrt(n/(NR-1))}')
+
 kallisto quant \
 	-i $INDEX \
 	-o $OUTDIR/${SAM} \
 	-t 8 \
 	--single \
+	-l $MEAN \
+	-s $SD \
 	$INDIR/${SAM}.trim.fastq.gz
 
 date 
