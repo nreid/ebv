@@ -11,5 +11,14 @@ jid8=$(sbatch --parsable --dependency=afterok:$jid7 06a_fastqc_small_trimmed.sh 
 jid9=$(sbatch --parsable --dependency=afterok:$jid8 06b_fastqc_total_trimmed.sh )
 jid10=$(sbatch --parsable --dependency=afterok:$jid9 07_multiqc_trimmed.sh)
 jid11=$(sbatch --parsable --dependency=afterok:$jid10 08_get_genomes.sh)
-jid12=$(sbatch --parsable --dependency=afterok:$jid11 total_analysis/01_kallisto_index.sh)
-jid13=$(sbatch --parsable --dependency=afterok:$jid12 total_analysis/02_kallisto_counts.sh)
+
+cd total_analysis
+jid12=$(sbatch --parsable --dependency=afterok:$jid11 01_kallisto_index.sh)
+jid13=$(sbatch --parsable --dependency=afterok:$jid12 02_kallisto_counts.sh)
+cd ..
+
+cd small_analysis
+jid14=$(sbatch --parsable --dependency=afterok:$jid13 01_hisat2_index.sh)
+jid15=$(sbatch --parsable --dependency=afterok:$jid14 02_hisat2_map.sh)
+cd ..
+
