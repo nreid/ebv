@@ -6,7 +6,7 @@
 #SBATCH --mem=80G
 #SBATCH --partition=general
 #SBATCH --qos=general
-#SBATCH --array=[0-11]
+#SBATCH --array=[0-3]
 ##SBATCH --mail-type=ALL
 ##SBATCH --mail-user=
 #SBATCH -o %x_%A_%a.out
@@ -15,7 +15,7 @@
 # this array script indexes each reference genome using a few different aligners
 
 
-INDIR=../../genome/
+INDIR=../genome/
 
 
 # total transcriptome
