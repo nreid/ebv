@@ -37,6 +37,7 @@ kallisto quant \
 	-i $INDEX \
 	-o $OUTDIR/${SAM} \
 	-t 8 \
+	--single \
 	$INDIR/${SAM}.trim.fastq.gz
 
 date 
