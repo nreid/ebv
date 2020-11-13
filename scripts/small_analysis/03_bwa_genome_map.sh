@@ -23,9 +23,9 @@ module load bwa/0.7.17
 module load samtools/1.9
 
 # input, output directories
-INDEX=../../genome/small_transcripts.bwa
+INDEX=../../genome/total_genome.bwa
 INDIR=../../results/05a_small_trimmed
-OUTDIR=../../results/small_analysis/bwa_trans_map
+OUTDIR=../../results/small_analysis/bwa_genome_map
 mkdir -p $OUTDIR
 
 # a bash array containing the sample IDs
