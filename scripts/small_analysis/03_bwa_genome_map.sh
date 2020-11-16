@@ -34,9 +34,11 @@ LIST=($(ls $INDIR/*trim.fastq.gz | sed 's/.*trimmed\///' | sed 's/.trim.*//'))
 # get one sample ID using the slurm array task ID
 SAM=${LIST[$SLURM_ARRAY_TASK_ID]}
 
-bwa mem -k 15 $INDEX $INDIR/${SAM}.trim.fastq.gz | \
+bwa aln $INDEX $INDIR/${SAM}.trim.fastq.gz | \
 samtools view -S -h -u - | \
 samtools sort -T $SAM - >$OUTDIR/${SAM}.bam
+
+samtools index $OUTDIR/${SAM}.bam
 
 date 
 
