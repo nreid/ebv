@@ -35,6 +35,7 @@ LIST=($(ls $INDIR/*trim.fastq.gz | sed 's/.*trimmed\///' | sed 's/.trim.*//'))
 SAM=${LIST[$SLURM_ARRAY_TASK_ID]}
 
 bwa aln $INDEX $INDIR/${SAM}.trim.fastq.gz | \
+bwa samse $INDEX - $INDIR/${SAM}.trim.fastq.gz | \
 samtools view -S -h -u - | \
 samtools sort -T $SAM - >$OUTDIR/${SAM}.bam
 
