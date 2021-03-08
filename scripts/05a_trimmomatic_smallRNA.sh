@@ -9,7 +9,7 @@
 #SBATCH --mem=20G
 #SBATCH --partition=general
 #SBATCH --qos=general
-#SBATCH --array=[0-28]%28
+#SBATCH --array=[0-31]%32
 
 
 hostname

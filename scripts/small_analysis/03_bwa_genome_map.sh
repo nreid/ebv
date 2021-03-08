@@ -6,7 +6,7 @@
 #SBATCH --mem=30G
 #SBATCH --partition=general
 #SBATCH --qos=general
-#SBATCH --array=[0-28]
+#SBATCH --array=[0-31]
 ##SBATCH --mail-type=ALL
 ##SBATCH --mail-user=
 #SBATCH -o %x_%A_%a.out

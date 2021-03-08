@@ -9,7 +9,7 @@
 #SBATCH --mem=2G
 #SBATCH --partition=general
 #SBATCH --qos=general
-#SBATCH --array=[0-28]%29
+#SBATCH --array=[0-31]%32
 
 hostname
 date
