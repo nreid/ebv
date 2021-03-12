@@ -79,3 +79,17 @@ See script [`02_kallisto_counts.sh`](scripts/total_analysis/02_kallisto_counts.s
 ### Step 3: Statistical analysis in R
 
 See script [`analysis.R`](scripts/total_analysis/analysis.R)
+
+## Small RNA libraries
+
+I have been exploring a few different approaches here:
+
+`ShortStack`: See script [`01_shortstack.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/01_shortstack.sh). This script runs [`ShortStack`](https://github.com/MikeAxtell/ShortStack) on all the small RNA samples. It appears to have run successfully. 
+
+`miRDeep2`: This is a series of scripts. 
+ - [`02a_mirdeep2_bowtie_build.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02a_mirdeep2_bowtie_build.sh)
+ - [`02b_mirdeep2_mapper.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02b_mirdeep2_mapper.pl.sh)
+ - [`02c_mirdeep2_mirdeep2.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02c_mirdeep2_mirdeep2.pl.sh)
+
+As of this update, `02c` is running. The quantifier script has not yet been run. 
+
