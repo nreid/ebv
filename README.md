@@ -86,7 +86,7 @@ I have been exploring a few different approaches here:
 
 `ShortStack`: See script [`01_shortstack.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/01_shortstack.sh). This script runs [`ShortStack`](https://github.com/MikeAxtell/ShortStack) on all the small RNA samples. It appears to have run successfully. 
 
-`miRDeep2`: This is a series of scripts. 
+`miRDeep2`: [`mirDeep2`](https://github.com/rajewsky-lab/mirdeep2) is a a series of scripts. 
  - [`02a_mirdeep2_bowtie_build.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02a_mirdeep2_bowtie_build.sh)
  - [`02b_mirdeep2_mapper.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02b_mirdeep2_mapper.pl.sh)
  - [`02c_mirdeep2_mirdeep2.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02c_mirdeep2_mirdeep2.pl.sh)
