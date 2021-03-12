@@ -57,6 +57,8 @@ wget -P $INDIR ftp://mirbase.org/pub/mirbase/CURRENT/hairpin.fa.gz
 
 GENOME2=../../genome/total_genome_nowhitespace.fa
 
+# first sed call removes white space
+# second sed call edits non header lines and replaces non ACGT characters with N and is case-insensitive
 sed 's/ .*//' $GENOME | sed '/^[^>]/ s/[^AGTC]/N/gi' >$GENOME2
 
 # run mirdeep2.pl
