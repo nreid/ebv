@@ -14,7 +14,7 @@
 hostname
 date
 
-# identify miRNAs
+# identify miRNAs with mirdeep2.pl
 
 # load software
 
@@ -51,10 +51,13 @@ wget -P $INDIR ftp://mirbase.org/pub/mirbase/CURRENT/hairpin.fa.gz
 
 # mirdeep2 cannot handle a genome fa with whitespace in the headers
 # so we have to make another copy of the genome
+# it also can't handle IUPAC ambiguities. so we'll remove those as well. 
+
+#sed '/^[^>]/ s/[^AGTC]/N/gi' < seq.fa
 
 GENOME2=../../genome/total_genome_nowhitespace.fa
 
-sed 's/ .*//' $GENOME >$GENOME2
+sed 's/ .*//' $GENOME | sed '/^[^>]/ s/[^AGTC]/N/gi' >$GENOME2
 
 # run mirdeep2.pl
 
