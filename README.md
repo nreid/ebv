@@ -93,3 +93,5 @@ I have been exploring a few different approaches here:
 
 As of this update, `02c` is running. The quantifier script has not yet been run. 
 
+I have also aligned all the small RNA libraries to the reference genome (including EBV) with `bwa`. That is documented here: [`xx_bwa_genome_map.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/xx_bwa_genome_map.sh). 
+
