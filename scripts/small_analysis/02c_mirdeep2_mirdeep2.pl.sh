@@ -63,15 +63,18 @@ sed 's/ .*//' $GENOME | sed '/^[^>]/ s/[^AGTC]/N/gi' >$GENOME2
 
 # run mirdeep2.pl
 
+# breaking my usual rule and cd'ing to the mirdeep directory
+	# b/c mirdeep2.pl does not offer output directory specification???
+
+cd $INDIR
+
 perl $MIRDEEP2 \
-$INFA \
-$GENOME2 \
-$INARF \
-$INDIR/ref_miRNA.fa \
-$INDIR/ptr_miRNA.fa \
-$INDIR/ref_precursors.fa \
+reads.fa \
+../../../genome/total_genome_nowhitespace.fa  \
+reads_vs_genome.arf \
+ref_miRNA.fa \
+ptr_miRNA.fa \
+ref_precursors.fa \
 -P \
--v \
--t Human \
-2>$INDIR/report.log 
+-t Human 
 
