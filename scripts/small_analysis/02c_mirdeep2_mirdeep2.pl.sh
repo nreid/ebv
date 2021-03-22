@@ -18,7 +18,7 @@ date
 
 # load software
 
-module mirdeep2/2.0.0.8
+module load mirdeep2/2.0.0.8
 
 MIRDEEP2=/isg/shared/apps/mirdeep2/2.0.0.8/src/miRDeep2.pl
 
