@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=mirdeep2.pl
+#SBATCH --job-name=quantifier.pl
 #SBATCH -n 1
 #SBATCH -N 1
 #SBATCH -c 32
@@ -34,7 +34,7 @@ mkdir -p $OUTDIR
 cd $OUTDIR
 
 quantifier.pl \
-../ref_precursors.fa \
-../ref_miRNA.fa \
-../reads.fa
+-p ../ref_precursors.fa \
+-m ../ref_miRNA.fa \
+-r ../reads.fa
 
