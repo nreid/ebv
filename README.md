@@ -87,11 +87,12 @@ I have been exploring a few different approaches here:
 `ShortStack`: See script [`01_shortstack.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/01_shortstack.sh). This script runs [`ShortStack`](https://github.com/MikeAxtell/ShortStack) on all the small RNA samples. It appears to have run successfully. 
 
 `miRDeep2`: [`mirDeep2`](https://github.com/rajewsky-lab/mirdeep2) is a a series of scripts. 
- - [`02a_mirdeep2_bowtie_build.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02a_mirdeep2_bowtie_build.sh)
- - [`02b_mirdeep2_mapper.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02b_mirdeep2_mapper.pl.sh)
- - [`02c_mirdeep2_mirdeep2.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02c_mirdeep2_mirdeep2.pl.sh)
-
-As of this update, `02c` is running. The quantifier script has not yet been run. 
+ - [`02a_mirdeep2_bowtie_build.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02a_mirdeep2_bowtie_build.sh) This step indexes the reference genome (+EBV). 
+ - [`02b_mirdeep2_mapper.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02b_mirdeep2_mapper.pl.sh) This step preprocesses the reads and maps them to the reference genome. it produces a file of unique sequences (`reads.fa`) and a mapping of those reads to the genome (`reads_vs_genome.arf`). 
+ - [`02c_mirdeep2_mirdeep2.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02c_mirdeep2_mirdeep2.pl.sh) This is the core script, it takes in a file of known miRNAs (and their precursors, and miRNAs from related species), decides whether they are present in the current dataset and searches for new candidate miRNAs. 
+ - [`02d_mirdeep2_quantifier.pl.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/02d_mirdeep2_quantifier.pl.sh) I used this script to quantify miRNAs of interest. `mirdeep2.pl` quantifies miRNAS, but for some reason it only output the human-specific counts, and did not include the EBV counts. 
 
 I have also aligned all the small RNA libraries to the reference genome (including EBV) with `bwa`. That is documented here: [`xx_bwa_genome_map.sh`](https://github.com/nreid/ebv/blob/main/scripts/small_analysis/xx_bwa_genome_map.sh). 
+
+PCA and heatmap plots and a description of some results from both of these datasets can be found [here](). 
 

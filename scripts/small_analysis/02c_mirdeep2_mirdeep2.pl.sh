@@ -78,3 +78,14 @@ ref_precursors.fa \
 -P \
 -t Human 
 
+
+# the file "result*csv" contains 4 different tab separated results tables
+	# here we're going to just extract the table of known miRNAs that were detected in the analysis
+	# we ignore novel ones because none were found in EBV, which is the focus here
+
+awk '{if ($1 ~ /mature/) x=1}
+	{if ($1 ~ /^$/) x=0}
+	{if (x == 1) print $0}' \
+	result_*.csv \
+>mature_miRNA_found.txt
+
