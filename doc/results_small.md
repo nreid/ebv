@@ -16,10 +16,15 @@ I analyzed the data using two pieces of software:
 
 These are very different approaches. `ShortStack` was originally developed for plant data, but is not limited to analyzing only miRNA data. It is included here because it is simple to use and well documented. It did seem to have some flaws, however. At least one pair of what appear to be clearly different miRNA pileups have been subsumed into a single locus. I'm guessing it is not great at identifying distinct loci whose pileups may partially overlap when sequencing is extremely deep, as it is here. 
 
-`miRDeep2` is a bit more opaque, difficult to run, and the output files were harder to parse. It also only discoveres and quantifies miRNA, which seem to be a relatively small proportion of the total small RNA in these libraries. It takes in known a priori miRNAs as well as discovers new ones. 
+`miRDeep2` is a bit more opaque, difficult to run, and the output files were harder to parse. It also only discoveres and quantifies miRNA, which seem to be a relatively small proportion of the total small RNA in these libraries. It takes in known a priori miRNAs as well as discovers new ones. Because miRDeep2 targets miRNAs, it analyzes a small fraction of the data. 
 
+### Total reads analyzed
 
-| Sample            |    total | shortstack | mirdeep2 |shortstack_pct | mirdeep2_pct |
+This [table](reads.csv) gives the total number of reads passing the quality filters and trimming, how many reads were assigned to features in `shortstack` and `mirdeep2`, and their percentages of the total respectively. 
+
+`mirdeep2` analyzes far fewer reads than `shortstack`, presumably because `mirdeep2` is only looking at miRNA. The percentage of the data representing miRNA analyzed by miRDeep2 is highly variable. 
+
+| Sample            |    total | shortstack | mirdeep2 |shortstack_prop | mirdeep2_prop |
 | ------------------|----------|------------|----------|---------------|------------- |
 | Daudi_Ago1KD_S2   | 37690751 |   36684233 |    86272 |     0.9732954 | 0.0022889435 |
 | Daudi_Ago2KD_S8   | 37838612 |   37139800 |    12498 |     0.9815318 | 0.0003302975 |
@@ -58,7 +63,9 @@ These are very different approaches. `ShortStack` was originally developed for p
 
 ### Total reads analyzed, EBV only
 
-| Sample            |    total | shortstack | mirdeep2 | shortstack_% | mirdeep2_%|
+This [table](ebvreads.csv) gives the total number of reads passing the quality filters and trimming, how many reads were assigned to features in shortstack and mirdeep2 _ONLY FOR READS MAPPING TO EBV_, and their percentages of the total respectively.  
+
+| Sample            |    total | shortstack | mirdeep2 | shortstack_prop | mirdeep2_prop|
 | ------------------|----------|------------|----------|----------------|-------------|
 | Daudi_Ago1KD_S2   | 37690751 |      30835 |     2220 |   8.181052e-04 | 5.890039e-05|
 | Daudi_Ago2KD_S8   | 37838612 |       9691 |      359 |   2.561140e-04 | 9.487663e-06|
@@ -92,3 +99,19 @@ These are very different approaches. `ShortStack` was originally developed for p
 | SNU_dicerKD_S8    | 55815305 |     861734 |   275588 |   1.543903e-02 | 4.937499e-03|
 | SNU_droshaKD_S3   | 63704620 |     228712 |    46797 |   3.590195e-03 | 7.345935e-04|
 | SNU_laKD_S1       | 40057104 |     402880 |   121341 |   1.005764e-02 | 3.029201e-03|
+
+### PCA plots
+
+This plot shows the clustering of samples by their total expression profiles from `shortstack`. 
+
+![shortstack PCA](figs/shortstack_PCA.png)
+
+This plot shows the equivalent clustering of samples by their total expression profiles from `mirdeep2`. 
+
+![shortstack PCA](figs/shortstack_PCA.png)
+
+
+### Heatmaps
+
+
+

@@ -20,7 +20,7 @@ mqca <- read.table("../../results/07a_multiqc_small_trimmed/multiqc_data/multiqc
 meta <- full_join(mqcb,mqca) %>% 
 	separate(sample,"_",into=c("line","kd","id"),remove=FALSE) %>%
 	mutate(kd=gsub("^a","A",kd) %>% gsub("^d","D",.) %>% gsub("^l","L",.))
-
+rownames(meta) <- meta[,1]
 
 # make some plots---------------------------------------------------------------------------------------------------------
 
@@ -120,8 +120,13 @@ p <- ggplot(dat,aes(x=PC1,y=PC2,col=group)) +
   geom_text_repel(aes(label=name))
 p
 
+ggsave(filename="shortstack_PCA.png",plot=p,device="png",path=figdir)
+
 
 # heatmap
+
+
+png(filename=paste0(figdir,"shortstack_heatmap_ebv_only.png"), width=800,height=800)
 
 df <- coldata[,-3]
 
@@ -133,6 +138,7 @@ pheatmap(
   annotation_col=df
   )
 
+dev.off()
 
 ###############################################
 # analyze results from miRDeep2
@@ -222,7 +228,11 @@ p <- ggplot(dat,aes(x=PC1,y=PC2,col=group)) +
   geom_text_repel(aes(label=name))
 p
 
+ggsave(filename="mirdeep2_PCA.png",plot=p,device="png",path=figdir)
+
 # heatmap
+
+png(filename=paste0(figdir,"mirdeep2_heatmap_ebv_only.png"), width=800,height=800)
 
 df <- coldata[,-3]
 
@@ -234,3 +244,19 @@ pheatmap(
   annotation_col=df
   )
 
+dev.off()
+
+
+#######################
+# table output
+#######################
+
+
+reads <- data.frame(total=meta[colnames(ssmat),9],shortstack=colSums(ssmat),mirdeep2=colSums(mdraw)) %>%
+	mutate(shortstack_pct=shortstack/total,mirdeep2_pct=mirdeep2/total)
+
+ebvreads <- data.frame(total=meta[colnames(ssmat),9],shortstack=colSums(ssmat[grep("EBV",rownames(ssmat)),]),mirdeep2=colSums(mdraw[grep("ebv",rownames(mdraw)),])) %>%
+	mutate(shortstack_pct=shortstack/total,mirdeep2_pct=mirdeep2/total)
+
+write.csv(reads,"../../doc/reads.csv")
+write.csv(ebvreads,"../../doc/ebvreads.csv")
