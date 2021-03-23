@@ -108,10 +108,18 @@ This plot shows the clustering of samples by their total expression profiles fro
 
 This plot shows the equivalent clustering of samples by their total expression profiles from `mirdeep2`. 
 
-![shortstack PCA](figs/shortstack_PCA.png)
+![shortstack PCA](figs/mirdeep2_PCA.png)
 
 
 ### Heatmaps
 
+This plot is a heatmap of expression values for EBV small RNA features from `shortstack`
 
+![shortstack heatmap](figs/shortstack_heatmap_ebv_only.png)
+
+
+This plot is a heatmap of expression values for EBV miRNAs from `mirdeep2`
+
+
+![shortstack heatmap](figs/mirdeep2_heatmap_ebv_only.png)
 
